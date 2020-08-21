@@ -51,6 +51,7 @@ const App: React.FC = () => {
               status === "ERROR" ? "is-invalid" : ""
             }`}
             type="text"
+            autoFocus
             onChange={handleInputUrlChange}
           />
           <div className="invalid-feedback">
