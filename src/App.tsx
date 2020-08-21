@@ -1,5 +1,4 @@
 import React, { useState } from "react";
-import "./App.css";
 
 type Status = "EMPTY" | "SUCCESS" | "ERROR";
 
@@ -41,16 +40,38 @@ const App: React.FC = () => {
   };
 
   return (
-    <div className="App">
-      <input type="text" onChange={handleInputUrlChange} />
+    <div className="container">
+      <h1 className="my-5">Cryptic &rarr; Fifteensquared</h1>
+      <div className="my-5">
+        <div className="form-group">
+          <label htmlFor="url-input">URL</label>
+          <input
+            id="url-input"
+            className={`form-control form-control-lg ${
+              status === "ERROR" ? "is-invalid" : ""
+            }`}
+            type="text"
+            onChange={handleInputUrlChange}
+          />
+          <div className="invalid-feedback">
+            Sorry, that URL wasn't recognised
+          </div>
+          <small id="url-help" className="form-text text-muted">
+            Paste in a URL to get started
+          </small>
+        </div>
 
-      {status === "EMPTY" && <p>Paste in url to get started</p>}
-      {status === "SUCCESS" && (
-        <a href={fifteensquaredUrl} target="_blank" rel="noopener noreferrer">
-          Open
-        </a>
-      )}
-      {status === "ERROR" && <p>Sorry, that url wasn't recognised</p>}
+        {status === "SUCCESS" && (
+          <a
+            className="btn btn-lg btn-primary"
+            href={fifteensquaredUrl}
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            Open
+          </a>
+        )}
+      </div>
     </div>
   );
 };
