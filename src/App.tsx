@@ -1,26 +1,58 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React, { useState } from "react";
+import "./App.css";
 
-function App() {
+type Status = "EMPTY" | "SUCCESS" | "ERROR";
+
+const GUARDIAN_QUIPTIC_URL_REGEX = /theguardian.com\/crosswords\/quiptic\/(\d+)/;
+
+const App: React.FC = () => {
+  const [status, setStatus] = useState<Status>("EMPTY");
+  const [fifteensquaredUrl, setFifteenSquaredUrl] = useState("");
+
+  const isEmpty = (url: string): boolean => {
+    return url.trim() === "";
+  };
+
+  const checkForGuardianQuipticMatch = (url: string): boolean => {
+    const matches = url.match(GUARDIAN_QUIPTIC_URL_REGEX);
+    if (matches) {
+      const number = matches[1];
+      setFifteenSquaredUrl(
+        `https://www.fifteensquared.net/guardian-quiptic-${number}`
+      );
+      return true;
+    }
+    return false;
+  };
+
+  const checkForMatches = (url: string): boolean => {
+    return checkForGuardianQuipticMatch(url);
+  };
+
+  const handleInputUrlChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const url = event.target.value;
+    if (isEmpty(url)) {
+      setStatus("EMPTY");
+    } else if (checkForMatches(url)) {
+      setStatus("SUCCESS");
+    } else {
+      setStatus("ERROR");
+    }
+  };
+
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
+      <input type="text" onChange={handleInputUrlChange} />
+
+      {status === "EMPTY" && <p>Paste in url to get started</p>}
+      {status === "SUCCESS" && (
+        <a href={fifteensquaredUrl} target="_blank" rel="noopener noreferrer">
+          Open
         </a>
-      </header>
+      )}
+      {status === "ERROR" && <p>Sorry, that url wasn't recognised</p>}
     </div>
   );
-}
+};
 
 export default App;
