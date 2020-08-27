@@ -17,7 +17,7 @@ const App: React.FC = () => {
     if (matches) {
       const number = matches[1];
       setFifteenSquaredUrl(
-        `https://www.fifteensquared.net/guardian-quiptic-${number}`
+        `https://www.fifteensquared.net/guardian-quiptic-${number}`,
       );
       return true;
     }
@@ -55,7 +55,7 @@ const App: React.FC = () => {
             onChange={handleInputUrlChange}
           />
           <div className="invalid-feedback">
-            Sorry, that URL wasn't recognised
+            Sorry, that URL wasn&apos;t recognised
           </div>
           <small id="url-help" className="form-text text-muted">
             Paste in a URL to get started
