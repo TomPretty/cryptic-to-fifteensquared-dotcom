@@ -1,8 +1,8 @@
 import React, { useState } from "react";
 
-type Status = "EMPTY" | "SUCCESS" | "ERROR";
+import { translateGuardianQuipticUrl } from "./translators";
 
-const GUARDIAN_QUIPTIC_URL_REGEX = /theguardian.com\/crosswords\/quiptic\/(\d+)/;
+type Status = "EMPTY" | "SUCCESS" | "ERROR";
 
 const App: React.FC = () => {
   const [status, setStatus] = useState<Status>("EMPTY");
@@ -12,27 +12,21 @@ const App: React.FC = () => {
     return url.trim() === "";
   };
 
-  const checkForGuardianQuipticMatch = (url: string): boolean => {
-    const matches = url.match(GUARDIAN_QUIPTIC_URL_REGEX);
-    if (matches) {
-      const number = matches[1];
-      setFifteenSquaredUrl(
-        `https://www.fifteensquared.net/guardian-quiptic-${number}`,
-      );
-      return true;
+  const translateUrl = (url: string): boolean => {
+    let wasTranslated = false;
+    const translatedUrl = translateGuardianQuipticUrl(url);
+    if (translatedUrl) {
+      setFifteenSquaredUrl(translatedUrl);
+      wasTranslated = true;
     }
-    return false;
-  };
-
-  const checkForMatches = (url: string): boolean => {
-    return checkForGuardianQuipticMatch(url);
+    return wasTranslated;
   };
 
   const handleInputUrlChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const url = event.target.value;
     if (isEmpty(url)) {
       setStatus("EMPTY");
-    } else if (checkForMatches(url)) {
+    } else if (translateUrl(url)) {
       setStatus("SUCCESS");
     } else {
       setStatus("ERROR");
