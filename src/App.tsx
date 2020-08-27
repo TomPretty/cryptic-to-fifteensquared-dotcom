@@ -1,6 +1,9 @@
 import React, { useState } from "react";
 
-import { translateGuardianQuipticUrl } from "./translators";
+import {
+  translateGuardianQuipticUrl,
+  translateGuardianCrypticUrl,
+} from "./translators";
 
 type Status = "EMPTY" | "SUCCESS" | "ERROR";
 
@@ -14,7 +17,8 @@ const App: React.FC = () => {
 
   const translateUrl = (url: string): boolean => {
     let wasTranslated = false;
-    const translatedUrl = translateGuardianQuipticUrl(url);
+    const translatedUrl =
+      translateGuardianQuipticUrl(url) || translateGuardianCrypticUrl(url);
     if (translatedUrl) {
       setFifteenSquaredUrl(translatedUrl);
       wasTranslated = true;
