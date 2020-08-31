@@ -1,4 +1,4 @@
-import translateUrl from "./translators";
+import translateUrl from "./translateUrl";
 
 describe("translateUrl", () => {
   it("translates a valid Guardian Quiptic url", () => {

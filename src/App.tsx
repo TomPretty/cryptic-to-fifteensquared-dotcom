@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 
-import translateUrl from "./translators";
+import translateUrl from "./translateUrl";
 
 type Status = "EMPTY" | "SUCCESS" | "ERROR";
 
