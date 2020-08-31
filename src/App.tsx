@@ -33,6 +33,12 @@ const App: React.FC = () => {
     }
   };
 
+  const handleKeyPress = (event: React.KeyboardEvent<HTMLInputElement>) => {
+    if (event.key === "Enter" && status === "SUCCESS") {
+      window.open(fifteensquaredUrl, "_blank");
+    }
+  };
+
   return (
     <div className="container">
       <h1 className="my-5">Cryptic &rarr; Fifteensquared</h1>
@@ -47,6 +53,7 @@ const App: React.FC = () => {
             type="text"
             autoFocus
             onChange={handleInputUrlChange}
+            onKeyPress={handleKeyPress}
           />
           <div className="invalid-feedback">
             Sorry, that URL wasn&apos;t recognised
