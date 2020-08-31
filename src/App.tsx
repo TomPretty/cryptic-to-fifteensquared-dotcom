@@ -39,6 +39,9 @@ const App: React.FC = () => {
     }
   };
 
+  const DEFAULT_HELPER_TEXT = "Paste in a URL to get started";
+  const SUCCESS_HELPER_TEXT = "Hit enter to go to the solution";
+
   return (
     <div className="container">
       <h1 className="my-5">Cryptic &rarr; Fifteensquared</h1>
@@ -59,7 +62,8 @@ const App: React.FC = () => {
             Sorry, that URL wasn&apos;t recognised
           </div>
           <small id="url-help" className="form-text text-muted">
-            Paste in a URL to get started
+            {status === "EMPTY" && DEFAULT_HELPER_TEXT}
+            {status === "SUCCESS" && SUCCESS_HELPER_TEXT}
           </small>
         </div>
 
