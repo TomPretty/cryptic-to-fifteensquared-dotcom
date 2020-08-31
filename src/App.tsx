@@ -1,9 +1,6 @@
 import React, { useState } from "react";
 
-import {
-  translateGuardianQuipticUrl,
-  translateGuardianCrypticUrl,
-} from "./translators";
+import translateUrl from "./translateUrl";
 
 type Status = "EMPTY" | "SUCCESS" | "ERROR";
 
@@ -15,10 +12,9 @@ const App: React.FC = () => {
     return url.trim() === "";
   };
 
-  const translateUrl = (url: string): boolean => {
+  const translate = (url: string): boolean => {
     let wasTranslated = false;
-    const translatedUrl =
-      translateGuardianQuipticUrl(url) || translateGuardianCrypticUrl(url);
+    const translatedUrl = translateUrl(url);
     if (translatedUrl) {
       setFifteenSquaredUrl(translatedUrl);
       wasTranslated = true;
@@ -30,7 +26,7 @@ const App: React.FC = () => {
     const url = event.target.value;
     if (isEmpty(url)) {
       setStatus("EMPTY");
-    } else if (translateUrl(url)) {
+    } else if (translate(url)) {
       setStatus("SUCCESS");
     } else {
       setStatus("ERROR");
